@@ -1,14 +1,10 @@
 #include "EchoCommand.h"
 
 EchoCommand::EchoCommand() : Command() {
-
+	this->isCompleted = false;
 }
 
-EchoCommand::EchoCommand(Protocol protocol) : Command(protocol) {
-
-}
-
-void EchoCommand::execute(Type type, SOCKET sock, char *buffer) const {
+void EchoCommand::execute(Type type, SOCKET sock, char *buffer) {
 	int nowRecv;
 
 	if (type == CLIENT) {
@@ -20,4 +16,6 @@ void EchoCommand::execute(Type type, SOCKET sock, char *buffer) const {
 		std::cout << "ECHO command" << std::endl;
 		_send(sock, buffer + 5, strlen(buffer) - 5);
 	}
+
+	this->isCompleted = true;
 }

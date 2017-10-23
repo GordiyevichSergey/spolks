@@ -21,6 +21,9 @@ SOCKET ServerConfigurator::configure() const{
 		return -1;
 	}
 
+	int yes = 1;
+	setsockopt(sock, SOL_SOCKET, SO_REUSEADDR, (char*)&yes, sizeof(int));
+
 	sockAddr = createSockAddr();
 
 	try {

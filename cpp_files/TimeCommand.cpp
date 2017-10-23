@@ -1,14 +1,10 @@
 #include "TimeCommand.h"
 
 TimeCommand::TimeCommand() : Command() {
-
+	this->isCompleted = false;
 }
 
-TimeCommand::TimeCommand(Protocol protocol) : Command(protocol) {
-
-}
-
-void TimeCommand::execute(Type type, SOCKET sock, char *buffer) const{
+void TimeCommand::execute(Type type, SOCKET sock, char *buffer) {
 	int nowRecv;
 
 	if (type == CLIENT) {
@@ -21,6 +17,8 @@ void TimeCommand::execute(Type type, SOCKET sock, char *buffer) const{
 		char *time = getCurrentTime();
 		_send(sock, time, (char)strlen(time));
 	}
+
+	this->isCompleted = true;
 }
 
 char* TimeCommand::getCurrentTime() const {

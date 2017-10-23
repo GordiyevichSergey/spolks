@@ -33,16 +33,24 @@ void ServerProcess::start() {
 				else {
 					Command *command;
 
-					try {
-						command = selectCommand(currentSocket, Type::SERVER, this->buffer);
-					}
-					catch (char *exception) {
-						std::cout << exception << std::endl;
-						return;
+					if ((command = checkActiveCommands(currentSocket)) == nullptr) {
+						try {
+							command = selectCommand(currentSocket, Type::SERVER, this->buffer);
+						}
+						catch (char *exception) {
+							std::cout << exception << std::endl;
+							return;
+						}
+
+						if (typeid(*command) == typeid(UploadCommand))
+							this->activeCommands.push_back(std::make_pair(currentSocket, command));
 					}
 
 					command->execute(Type::SERVER, currentSocket, this->buffer);
-					delete command;
+
+					if (command->checkStatus()) {
+						removeCompletedCommand(currentSocket);
+					}
 				}
 			}
 		}
@@ -77,11 +85,32 @@ void ServerProcess::acceptConnection() {
 	catch (char *exception) {
 		std::cout << exception << std::endl;
 		Configurator::closeSocket(this->serverSock);
-		throw "accept() error";
+		throw "setupKeepAlive() error";
 	}
 
 	FD_SET(clientSock, &this->master);
 	if (clientSock > this->fd_max) {
 		this->fd_max = clientSock;
+	}
+}
+
+Command* ServerProcess::checkActiveCommands(SOCKET sock) {
+	for (auto it = std::begin(this->activeCommands); it != std::end(this->activeCommands); it++) {
+		if (it->first == sock) {
+			return it->second;
+		}
+	}
+
+	return nullptr;
+}
+
+void ServerProcess::removeCompletedCommand(SOCKET sock) {
+	for (auto it = std::begin(activeCommands); it != std::end(activeCommands);) {
+		if (it->first == sock) {
+			it = activeCommands.erase(it);
+		}
+		else {
+			it++;
+		}
 	}
 }

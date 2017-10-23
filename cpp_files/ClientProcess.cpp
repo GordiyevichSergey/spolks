@@ -21,7 +21,7 @@ void ClientProcess::start() {
 				return;
 			}
 
-			com->execute(Type::CLIENT, this->clientSocket, command);
+			com->execute(Type::CLIENT, this->clientSocket, this->buffer);
 		}
 		else {
 			std::cout << "Wrong command" << std::endl;

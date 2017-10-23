@@ -6,12 +6,13 @@
 #include "Command.h"
 #include "TimeCommand.h"
 #include "EchoCommand.h"
+#include "UploadCommand.h"
 
 class Process {
+public:
+	static const int BUFFER_SIZE;
 protected:
 	char *buffer;
-	static const int BUFFER_SIZE;
-
 public:
 	Process();
 

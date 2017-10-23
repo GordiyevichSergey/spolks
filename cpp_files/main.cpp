@@ -15,21 +15,28 @@ int main(int argc, char *argv[]) {
 	Process *process = nullptr;
 
 	if (!strcmp(argv[1], "server")) {
+
 		configurator = new ServerConfigurator(3);
 		sock = configurator->configure();
 		process = new ServerProcess(sock);
 	}
-	else if(!strcmp(argv[1], "client")) {
+	else {
 		configurator = new ClientConfigurator();
 		sock = configurator->configure();
 		process = new ClientProcess(sock);
 	}
 
-	process->start();
+	if (sock != -1) {
+		process->start();
+	}
 
+	configurator->closeSocket(sock);
 #ifdef _WIN32
 	WSACleanup();
 #endif
+	delete configurator;
+	delete process;
+
 	system("pause");
 
 	return 0;

@@ -28,13 +28,13 @@ Command* Process::selectCommand(SOCKET sock, Type type, char *buffer) {
 	}
 
 	if (!strncmp(buffer, "TIME", 4)) {
-		out = new TimeCommand(Protocol::TCP);
+		out = new TimeCommand();
 	}
 	else if (!strncmp(buffer, "ECHO", 4)) {
-		out = new EchoCommand(Protocol::TCP);
+		out = new EchoCommand();
 	}
 	else if (!strncmp(buffer, "UPLOAD", 6)) {
-		out = nullptr;
+		out = new UploadCommand(buffer + 7);
 	}
 	else if (!strncmp(buffer, "DOWNLOAD", 8)) {
 		out = nullptr;

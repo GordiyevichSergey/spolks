@@ -2,6 +2,9 @@
 #define HEADERS_H
 
 #include <iostream>
+#include <fstream>
+#include <string>
+#include <vector>
 
 #ifdef _WIN32
 
@@ -10,6 +13,8 @@
 #pragma comment(lib, "WS2_32.lib")
 #pragma warning(disable:4996)
 typedef int socklen_t;
+#define CLIENT_PATH "E:\\spolks\\client files\\"
+#define SERVER_PATH "E:\\spolks\\server files\\"
 
 #endif
 
@@ -23,6 +28,8 @@ typedef int socklen_t;
 #define INVALID_SOCKET -1
 #define SOCKET_ERROR -1
 typedef int SOCKET;
+#define CLIENT_PATH "E:\\spolks\\client files\\"
+#define SERVER_PATH "E:\\spolks\\server files\\"
 
 #endif
 
