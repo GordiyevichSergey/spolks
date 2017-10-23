@@ -37,7 +37,7 @@ Command* Process::selectCommand(SOCKET sock, Type type, char *buffer) {
 		out = new UploadCommand(buffer + 7);
 	}
 	else if (!strncmp(buffer, "DOWNLOAD", 8)) {
-		out = nullptr;
+		out = new DownloadCommand(buffer + 9);
 	}
 	else if (!strncmp(buffer, "CLOSE", 5)) {
 		out = nullptr;

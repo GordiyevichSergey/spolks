@@ -7,6 +7,7 @@
 #include "TimeCommand.h"
 #include "EchoCommand.h"
 #include "UploadCommand.h"
+#include "DownloadCommand.h"
 
 class Process {
 public:

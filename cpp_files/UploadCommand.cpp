@@ -1,6 +1,5 @@
 #include "UploadCommand.h"
 
-
 UploadCommand::UploadCommand() : Command() {
 	this->isCompleted = false;
 	this->fileName = new char[strlen("file.mp4") + 1];

@@ -42,7 +42,7 @@ void ServerProcess::start() {
 							return;
 						}
 
-						if (typeid(*command) == typeid(UploadCommand))
+						if (typeid(*command) == typeid(UploadCommand) || typeid(*command) == typeid(DownloadCommand))
 							this->activeCommands.push_back(std::make_pair(currentSocket, command));
 					}
 
